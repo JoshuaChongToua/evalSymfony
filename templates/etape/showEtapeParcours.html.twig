@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etape{% endblock %}
+
+{% block body %}
+    <h1>{{ parcours.objet }}</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Etape</th>
+                <th>Intitulé</th>
+                <th>Description</th>
+                <th>Ressources</th>
+                <th>Rendu</th>
+                <th>Messages</th>
+                <th>Validation</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if etapes %}
+                {% for etape in etapes%}
+                <tr>
+                    <td>{{ etape.position }}</td>
+
+                    <td>{{ etape.intitule }}</td>
+
+                    <td>{{ etape.descriptif }}</td>
+                    <td>
+                        {% for ressource in ressources %}
+                            {% if ressource.etape.id == etape.id %}
+                                - {{ ressource.intitule }} <a href="{{ ressource.url }}">+</a>
+                                <br>
+                            {% endif %}
+                        {% endfor %}
+                        </td>
+                    <td>
+                        {% if rendusParEtape %}
+                            {% if rendusParEtape[etape.id] is defined %}
+                                {% for rendu in rendusParEtape[etape.id] %}
+                                    <a href="{{ asset(rendu.url) }}">{{ rendu.url|split('/')|last }}</a><br>
+                                {% endfor %}
+                            {% else %}
+                                <form method="post" enctype="multipart/form-data" action="{{ path('app_upload_rendu', {'id': etape.id}) }}">
+                                    <input type="file" name="document">
+                                    <button type="submit">Envoyer</button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if messages %}
+                            {% for message in messages %}
+                            {% endfor %}
+                        {% endif %}
+
+                    </td>
+                    <td></td>
+                    <td><a href="{{ path('app_etape_edit', {'id': etape.id}) }}">edit</a></td>
+                </tr>
+                {% endfor %}
+           {% endif %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ressource_new') }}">Ajouter une ressource </a>
+
+
+{#    {{ include('etape/_delete_form.html.twig') }}#}
+{% endblock %}

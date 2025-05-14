@@ -1,0 +1,84 @@
+<style>
+    .navbar-bar {
+        display: flex;
+        padding: 15px;
+    }
+
+    .logo {
+        display: flex;
+        width: 20%;
+        padding-left: 15px;
+    }
+
+    .item {
+        display: flex;
+        width: 60%;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .profile {
+        display: flex;
+        width: 20%;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 15px;
+    }
+
+    .name {
+        color: white;
+        text-decoration: none;
+    }
+
+    .name:hover {
+        color: #00d4a8;
+        text-shadow: 0 0 10px #00d4a8, 0 0 20px #00d4a8;
+
+    }
+
+    .a-admin {
+        text-decoration: none;
+        color: white;
+    }
+
+    .a-admin:hover {
+        color: #00d4a8;
+        text-shadow: 0 0 10px #00d4a8, 0 0 20px #00d4a8;
+    }
+
+</style>
+
+
+<nav class="navbar-bar">
+    <div class="logo">
+
+    </div>
+
+    <div class="item">
+        <div>
+            <a class="name" href="{{ path('app_parcours_index' ) }}"
+                data-turbo-action="replace">Parcours
+            </a>
+        </div>
+        <div>
+            <a class="name" href="{{ path('app_etape_index' ) }}"
+               data-turbo-action="replace">Etapes
+            </a>
+        </div>
+        <div>
+            <a class="name" href="{{ path('app_message_index' ) }}"
+               data-turbo-action="replace">Messages
+            </a>
+        </div>
+    </div>
+
+
+    <div class="profile">
+        {% if app.user %}
+            <a class="a-admin" href="{{ path('app_logout') }}" data-turbo-action="replace">Logout</a>
+        {% else %}
+            <a class="a-admin" href="{{ path('app_login') }}" data-turbo-action="replace">Login</a>
+        {% endif %}
+
+    </div>
+</nav>
